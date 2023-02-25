@@ -22,26 +22,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', WelcomeController::class);
 
-Route::controller(ContactController::class)->prefix('contacts')->name('contacts.')->group(function () {
-    Route::get('/', 'index')->name('index');
-    Route::get('/create', 'create')->name('create');
-    Route::post('/', 'store')->name('store');
-    Route::get('/{id}/edit', 'edit')->name('edit');
-    Route::put('/{id}', 'update')->name('update');
-    Route::get('/{id}', 'show')->name('show')->where('id', '[0-9]+');
-});
-
+Route::resource('/contacts', ContactController::class);
 Route::resources([
     '/companies' => CompanyController::class,
     '/tags' => TagController::class,
     '/tasks' => TaskController::class,
 ]);
-// Route::resource('/activities', ActivityController::class)->names(
-//     [
-//         'index' => 'activities.all',
-//         'show' => 'activities.view',
-//     ]
-// );
 Route::resource('/activities', ActivityController::class)->except(['index', 'show'])->parameters(
     [
         'activities' => 'active'
@@ -60,7 +46,3 @@ Route::get('/companies/{name?}', function ($name = null) {
 })->where('name', '[a-zA-Z]+');
 //whereAlpha('name');
 //whereAlphaNumeric('name'); if we want to use numbers and letters
-
-Route::fallback(function () {
-    return "<h1>Page not found</h1>";
-});
