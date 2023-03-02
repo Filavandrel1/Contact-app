@@ -1,3 +1,32 @@
+<script>
+  function gettingParamsFromURL(name) {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const orderQueue = urlParams.get('orderQueue');
+    const orderBy = urlParams.get('orderBy');
+    if ((orderBy === null || orderBy === name) && orderQueue == 1) {
+      document.getElementById('orderQueue').value = 0;
+    }else{
+      document.getElementById('orderQueue').value = 1;
+    }
+  } 
+  // create a function that displaying column name and arrow icon in direction of sorting
+  function displayOrder(name) {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const orderQueue = urlParams.get('orderQueue');
+    const orderBy = urlParams.get('orderBy');
+    if (orderBy === null || orderBy !== name) {
+      return '';
+    }
+    if (orderQueue == 1) {
+      return `<i class="fa fa-arrow-up"></i>`;
+    }else{
+      return `<i class="fa fa-arrow-down"></i>`;
+    }
+  }
+</script>
+
 @extends('layouts.main') @section('title', 'All Contacts') @section('content')
 <main class="py-5">
   <div class="container">
@@ -23,14 +52,14 @@
               <thead>
                 <tr>
                   <form>
-                    <th scope="col"><button type="submit" class="btn btn-sm"># </button></th>
-                    <th scope="col"><button type="submit" name="orderBy" id="first_name" onclick="document.getElementById('first_name').value = 'first_name', this.form.submit()" class="btn btn-sm">First Name</button></th>
-                    <th scope="col"><button type="submit" name="orderBy" id="Last_name" onclick="document.getElementById('Last_name').value = 'Last_name', this.form.submit()" class="btn btn-sm">Last Name</button></th>
-                    <th scope="col"><button type="submit" name="orderBy" id="Phone" onclick="document.getElementById('Phone').value = 'Phone', this.form.submit()" class="btn btn-sm">Phone</button></th>
-                    <th scope="col"><button type="submit" name="orderBy" id="Email" onclick="document.getElementById('Email').value = 'Email', this.form.submit()" class="btn btn-sm">Email</button></th>
-                    <th scope="col"><button type="submit" name="orderBy" id="Company" onclick="document.getElementById('Company').value = 'Company', this.form.submit()" class="btn btn-sm">Company</button></th>
-                    <th scope="col"><button class="btn btn-sm">Actions</button></th>
-                    <input type="hidden" name="orderQueue" value="{{(request()->orderQueue == 0 ? 1 : 0)}}">
+                    <th scope="col"><button disabled type="submit" class="btn btn-sm"># </button></th>
+                    <th scope="col"><button style="width: 120px;" type="submit" name="orderBy" id="first_name" onclick="document.getElementById('first_name').value = 'first_name', gettingParamsFromURL('first_name'), this.form.submit()" class="btn btn-sm">First Name <script>document.write(displayOrder('first_name'))</script></button></th>
+                    <th scope="col"><button type="submit" style="width: 120px;" name="orderBy" id="Last_name" onclick="document.getElementById('Last_name').value = 'last_name', gettingParamsFromURL('last_name'), this.form.submit()" class="btn btn-sm">Last Name <script>document.write(displayOrder('last_name'))</script></button></th>
+                    <th scope="col"><button disabled type="submit" class="btn btn-sm">Phone</button></th>
+                    <th scope="col"><button type="submit" name="orderBy" id="Email" onclick="document.getElementById('Email').value = 'email', gettingParamsFromURL('email'), this.form.submit()" class="btn btn-sm">Email <script>document.write(displayOrder('email'))</script></button></th>
+                    <th scope="col"><button disabled type="submit"class="btn btn-sm">Company</button></th>
+                    <th scope="col"><button disabled class="btn btn-sm">Actions</button></th>
+                    <input type="hidden" name="orderQueue" id="orderQueue">
                     <input type="hidden" name="company_id" value="{{request()->company_id}}">
                     <input type="hidden" name="search" value="{{request()->search}}">
                   </form>

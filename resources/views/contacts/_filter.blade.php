@@ -9,7 +9,7 @@
           <input type="text" class="form-control" name="search" value="{{request()->query('search')}}" id="search-input" placeholder="Search..." aria-label="Search..."
           aria-describedby="button-addon2" />
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('search-input').value = '', document.getElementById('search-select').selectedIndex = 0, this.form.submit()"
+            <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('search-input').value = '', document.getElementById('search-select').selectedIndex = 0, document.getElementById('orderBy').value = '', this.form.submit()"
               @disabled(!request()->filled('search') and !request()->filled('company_id'))
               >
               <i class="fa fa-refresh"></i>
@@ -23,5 +23,7 @@
     </div>
   </div>
 </div>
+<input type="hidden" name="orderQueue" id='orderQueue' value="{{request()->orderQueue}}">
+<input type="hidden" name="orderBy" id="orderBy" value="{{request()->orderBy}}">
 </form>
 

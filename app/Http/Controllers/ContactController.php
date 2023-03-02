@@ -18,7 +18,7 @@ class ContactController extends Controller
 
   public function index(CompanyRepository $company, Request $request)
   {
-    DB::enableQueryLog();
+    // DB::enableQueryLog();
     $companies = $this->company->pluck();
     $contacts = Contact::where(function ($query) {
       if ($companyId = request()->query('company_id')) {
@@ -32,7 +32,7 @@ class ContactController extends Controller
         $query->orWhere('phone', 'LIKE', "%$search%");
       }
     })->orderBy((request()->query('orderBy') ? request()->query('orderBy') : 'created_at'), request()->query('orderQueue') ? 'asc' : 'desc')->paginate(10);
-    DUMP(DB::getQueryLog());
+    // DUMP(DB::getQueryLog());
     // $contactsCollection = Contact::latest()->get();
     // $perPage = 10;
     // $currentPage = request()->query('page', 1);
