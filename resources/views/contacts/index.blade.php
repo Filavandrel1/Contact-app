@@ -22,13 +22,18 @@
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col">Phone</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Company</th>
-                  <th scope="col">Actions</th>
+                  <form>
+                    <th scope="col"><button type="submit" class="btn btn-sm"># </button></th>
+                    <th scope="col"><button type="submit" name="orderBy" id="first_name" onclick="document.getElementById('first_name').value = 'first_name', this.form.submit()" class="btn btn-sm">First Name</button></th>
+                    <th scope="col"><button type="submit" name="orderBy" id="Last_name" onclick="document.getElementById('Last_name').value = 'Last_name', this.form.submit()" class="btn btn-sm">Last Name</button></th>
+                    <th scope="col"><button type="submit" name="orderBy" id="Phone" onclick="document.getElementById('Phone').value = 'Phone', this.form.submit()" class="btn btn-sm">Phone</button></th>
+                    <th scope="col"><button type="submit" name="orderBy" id="Email" onclick="document.getElementById('Email').value = 'Email', this.form.submit()" class="btn btn-sm">Email</button></th>
+                    <th scope="col"><button type="submit" name="orderBy" id="Company" onclick="document.getElementById('Company').value = 'Company', this.form.submit()" class="btn btn-sm">Company</button></th>
+                    <th scope="col"><button class="btn btn-sm">Actions</button></th>
+                    <input type="hidden" name="orderQueue" value="{{(request()->orderQueue == 0 ? 1 : 0)}}">
+                    <input type="hidden" name="company_id" value="{{request()->company_id}}">
+                    <input type="hidden" name="search" value="{{request()->search}}">
+                  </form>
                 </tr>
               </thead>
               <tbody>
